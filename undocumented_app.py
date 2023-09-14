@@ -1,5 +1,5 @@
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -42,9 +42,17 @@ def hello_world():
 def home_print():
     return "<h1>This is home route</h1>"
 
-@app.route('/show')
-def show_db():
+@app.route('/update')
+def update():
+    pass
     return "Show Route"
+
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    todo = Todo.query.filter_by(sno=sno).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect('/')
 
 if __name__ == '__main__':
     with app.app_context():

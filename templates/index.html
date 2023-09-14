@@ -1,105 +1,61 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  </head>
-  <body>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-
-      <div class="container mt-3 mb-5">
-        <h3>Add Item</h3>
-        <form action="/" method="POST">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" id="title" aria-describedby="titleHelp">
-                <div id="titleHelp" class="form-text">e.g. Homework</div>
-            </div>
-            <div class="mb-3">
-                <label for="desc" class="form-label">Description</label>
-              <input type="text" class="form-control" name="desc" id="desc" aria-describedby="descHelp">
-              <div id="descHelp" class="form-text">e.g. Pythagoras Theorem Proof</div>
-            </div>
-            <!-- <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+{% extends 'base.html' %}
+{% block title %}
+  ToDo App
+{% endblock title %}
+{% block body %}
+<div class="container mt-3 mb-5">
+  <h3>Add Item</h3>
+  <form action="/" method="POST">
+      <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" name="title" id="title" aria-describedby="titleHelp">
+          <div id="titleHelp" class="form-text">e.g. Homework</div>
       </div>
-
-      <div class="container">
-        <h3>Your Items</h3>
-          {% if allTodo|length == 0 %}
-            <div class="alert alert-dark" role="alert">
-              No records found!
-            </div>
-          {% else %}
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Created on</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for todo in allTodo %}
-                  <tr>
-                    <th scope="row">{{loop.index}}</th>
-                    <td>{{todo.title}}</td>
-                    <td>{{todo.desc}}</td>
-                    <td>{{todo.date_created}}</td>
-                    <td>
-                      <a type="button" href="/update" class="btn btn-outline-dark btn-sm me-2">Update</button>
-                      <a type="button" href="/delete/{{todo.sno}}" class="btn btn-outline-dark btn-sm">Delete</button>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          {% endif %}
+      <div class="mb-3">
+          <label for="desc" class="form-label">Description</label>
+        <input type="text" class="form-control" name="desc" id="desc" aria-describedby="descHelp">
+        <div id="descHelp" class="form-text">e.g. Pythagoras Theorem Proof</div>
       </div>
+      <!-- <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
 
-  </body>
-</html>
+<div class="container">
+  <h3>Your Items</h3>
+    {% if allTodo|length == 0 %}
+      <div class="alert alert-dark" role="alert">
+        No records found!
+      </div>
+    {% else %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Created on</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in allTodo %}
+            <tr>
+              <th scope="row">{{loop.index}}</th>
+              <td>{{todo.title}}</td>
+              <td>{{todo.desc}}</td>
+              <td>{{todo.date_created}}</td>
+              <td>
+                <a type="button" href="/update/{{todo.sno}}" class="btn btn-outline-dark btn-sm me-2">Update</button>
+                <a type="button" href="/delete/{{todo.sno}}" class="btn btn-outline-dark btn-sm">Delete</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</div>
+{% endblock body %}

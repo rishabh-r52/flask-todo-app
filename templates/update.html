@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+  ToDo App
+{% endblock title %}
+{% block body %}
+<div class="container mt-3 mb-5">
+  <h3>Update Your Item</h3>
+  <form action="/update/{{todo.sno}}" method="POST">
+      <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" name="title" id="title" value="{{todo.title}}" aria-describedby="titleHelp">
+          <div id="titleHelp" class="form-text">e.g. Homework</div>
+      </div>
+      <div class="mb-3">
+          <label for="desc" class="form-label">Description</label>
+        <input type="text" class="form-control" name="desc" id="desc"  value="{{todo.desc}}" aria-describedby="descHelp">
+        <div id="descHelp" class="form-text">e.g. Pythagoras Theorem Proof</div>
+      </div>
+      <!-- <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+{% endblock body %}

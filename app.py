@@ -67,14 +67,31 @@ def hello_world():
     return render_template('index.html', allTodo=allTodo)
 
 # Refers to the url 127.0.0.1:1999/home/
-@app.route('/home')
-def home_print():
-    return "<h1>This is home route</h1>"
+# @app.route('/home')
+# def home_print():
+#     return "<h1>This is home route</h1>"
 
-@app.route('/update')
-def update():
-    pass
-    return "Show Route"
+@app.route('/update/<int:sno>', methods=['GET', 'POST'])
+def update(sno):
+    if request.method == "POST":
+        print("\nupdate post\n")
+
+        form_title = request.form['title']
+        form_desc = request.form['desc']
+
+        if form_title and form_desc:
+            todo = Todo.query.filter_by(sno=sno).first()
+
+            todo.title = form_title
+            todo.desc = form_desc
+            
+            db.session.add(todo)
+            db.session.commit()
+
+            return redirect('/')
+        
+    todo = Todo.query.filter_by(sno=sno).first()
+    return render_template('update.html', todo=todo)
 
 @app.route('/delete/<int:sno>')
 def delete(sno):

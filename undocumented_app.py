@@ -38,14 +38,27 @@ def hello_world():
     allTodo = Todo.query.all()
     return render_template('index.html', allTodo=allTodo)
 
-@app.route('/home')
-def home_print():
-    return "<h1>This is home route</h1>"
+@app.route('/update/<int:sno>', methods=['GET', 'POST'])
+def update(sno):
+    if request.method == "POST":
+        print("\nupdate post\n")
 
-@app.route('/update')
-def update():
-    pass
-    return "Show Route"
+        form_title = request.form['title']
+        form_desc = request.form['desc']
+
+        if form_title and form_desc:
+            todo = Todo.query.filter_by(sno=sno).first()
+
+            todo.title = form_title
+            todo.desc = form_desc
+            
+            db.session.add(todo)
+            db.session.commit()
+
+            return redirect('/')
+        
+    todo = Todo.query.filter_by(sno=sno).first()
+    return render_template('update.html', todo=todo)
 
 @app.route('/delete/<int:sno>')
 def delete(sno):
